@@ -2,8 +2,8 @@
       <section class="jumbotron text-center">
         <div class="container">
           <h1 class="jumbotron-heading mt-2">Blackjack</h1>
-          <p class="lead text-muted">Dealer Score: 19</p>
-          <p class="lead text-body-tertiary">You Score: 21</p>
+          <p class="lead text-muted">Dealer Score: <%= @game.dealer_score %></p>
+          <p class="lead text-body-tertiary">You Score: <%= @game.hand&.score %></p>
           <p>
             <a href="#" class="btn btn-primary my-2">Hit Me</a>
             <a href="#" class="btn btn-secondary my-2">I'll Stay</a>
