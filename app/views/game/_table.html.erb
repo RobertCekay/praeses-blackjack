@@ -1,0 +1,64 @@
+
+
+ <main role="main">
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading mt-2">Blackjack</h1>
+          <p class="lead text-muted">Dealer Score: <%= @game.dealer_score %></p>
+          <p class="lead text-body-tertiary">You Score: <%= @game.player_hand.summed_score %></p>
+          <p>
+            <a href="#" class="btn btn-primary my-2">Hit Me</a>
+            <a href="#" class="btn btn-secondary my-2">I'll Stay</a>
+          </p>
+        </div>
+      </section>
+
+      <div class="album py-2 bg-light">
+        <div class="container">
+          <h2 class="mt-2">Dealer's Cards</h2>
+          <div class="row">
+            <% @game.dealer_hand.cards.each do |card|  %>
+              <div class="col-md-3">
+                  <% if !card.facedown %>
+                    <div class="card mb-4 box-shadow dealer-card">
+                      <div class="card-body">
+                        <p class="card-text dealer-card-info"><%= card.rank %> of <%= card.suit %></p>
+                        <p class="card-text"><%= card.color %></p>
+                        <p class="card-text">points: <%= card.value %></p>
+                      </div>
+                    </div>
+                  <% else %>
+                    <div class="card mb-4 box-shadow dealer-card">
+                      <div class="card-body">
+                        <p class="card-text">Face</p>
+                        <p class="card-text">Down</p>
+                        <p class="card-text">Card</p>
+                      </div>
+                    </div>
+                  <% end %>
+              </div>
+            <% end%>
+          </div>
+        </div>
+
+      </div>
+      <div class="album py-2 bg-secondary">
+        <div class="container">
+          <h2 class="mt-2">Your Cards</h2>
+          <div class="row">
+            <% @game.player_hand.cards.each do |card| %>
+              <div class="col-md-3">
+                  <div class="card mb-4 box-shadow player-card">
+                    <div class="card-body">
+                      <p class="card-text player-card-info"><%= card.rank %> of <%= card.suit %></p>
+                      <p class="card-text"><%= card.color %></p>
+                      <p class="card-text">points: <%= card.value %></p>
+                    </div>
+                  </div>
+              </div>
+            <% end%>
+          </div>
+
+        </div>
+      </div>
+    </main>
