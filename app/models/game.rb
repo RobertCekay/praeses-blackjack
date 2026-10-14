@@ -3,7 +3,7 @@ class Game < ApplicationRecord
   has_one :dealer_hand, -> { where(role: "dealer") }, class_name: "Hand"
   # has_many :cards, through: :hand
 
-  after_initialize :setup_game
+  after_initialize :setup_game, if: :new_record?
 
   def setup_game
     self.player_hand = Hand.new(role: "player")
@@ -26,5 +26,12 @@ class Game < ApplicationRecord
 
   def dealer_score
     dealer_hand.cards.where(facedown: nil).sum(&:value)
+  end
+
+  def player_hit
+    self.player_hand.cards << deck.sample
+  end
+
+  def player_stay
   end
 end
