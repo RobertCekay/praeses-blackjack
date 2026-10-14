@@ -16,7 +16,6 @@ class GamesController < ApplicationController
     private
 
   def game_params
-    # Requires the :product key and only allows :name and :price
     params.permit(:hit, :stay)
   end
 end

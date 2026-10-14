@@ -6,6 +6,8 @@
             <span class="text-success">- You Win!</span>
           <% elsif @game.winner == 'dealer' %>
             <span class="text-danger">- You Lose</span>
+          <% elsif @game.winner == 'tie' %>
+            <span class="text-secondary">- You Tie</span>
           <% end %>
         </h1>
         <p class="lead text-muted">Dealer Score: <%= @game.dealer_score %></p>
