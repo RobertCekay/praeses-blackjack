@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "game/index.html.erb", type: :view do
+RSpec.describe "games/index.html.erb", type: :view do
   before do
     # Assign instance variables that the view expects from the controller
     @game = Game.new
