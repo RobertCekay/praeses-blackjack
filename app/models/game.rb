@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
   has_one :hand, autosave: true
-  has_many :cards
+  has_many :cards, through: :hand
 
   after_initialize :setup_game
 
