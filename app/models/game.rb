@@ -30,6 +30,9 @@ class Game < ApplicationRecord
 
   def player_hit
     self.player_hand.cards << deck.sample
+
+    # self.winner = "player"
+    save
   end
 
   def player_stay

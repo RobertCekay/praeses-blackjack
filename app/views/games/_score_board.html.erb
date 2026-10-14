@@ -1,6 +1,13 @@
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading mt-2">Blackjack</h1>
+        <h1 class="jumbotron-heading mt-2">
+          Blackjack
+          <% if @game.winner == 'player' %>
+            <span class="text-success">- You Win!</span>
+          <% elsif @game.winner == 'dealer' %>
+            <span class="text-danger">- You Lose</span>
+          <% end %>
+        </h1>
         <p class="lead text-muted">Dealer Score: <%= @game.dealer_score %></p>
         <p class="lead text-body-tertiary">You Score: <%= @game.player_hand.summed_score %></p>
         <div class="d-flex gap-2 justify-content-center align-items-center">
@@ -19,10 +26,5 @@
             method: :get,
             class: "btn btn-outline-danger my-2" %>
         </div>
-
-
-
-
-
       </div>
     </section>
