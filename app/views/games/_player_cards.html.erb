@@ -1,0 +1,18 @@
+<div class="album py-2 bg-secondary">
+      <div class="container">
+        <h2 class="mt-2">Your Cards</h2>
+        <div class="row">
+          <% @game.player_hand.cards.each do |card| %>
+            <div class="col-md-3">
+                <div class="card mb-4 box-shadow player-card">
+                  <div class="card-body">
+                    <p class="card-text player-card-info"><%= card.rank %> of <%= card.suit %></p>
+                    <p class="card-text"><%= card.color %></p>
+                    <p class="card-text">points: <%= card.value %></p>
+                  </div>
+                </div>
+            </div>
+          <% end%>
+        </div>
+      </div>
+    </div>

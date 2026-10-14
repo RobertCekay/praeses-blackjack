@@ -1,0 +1,28 @@
+<div class="album py-2 bg-light">
+      <div class="container">
+        <h2 class="mt-2">Dealer's Cards</h2>
+        <div class="row">
+          <% @game.dealer_hand.cards.each do |card|  %>
+            <div class="col-md-3">
+                <% if !card.facedown %>
+                  <div class="card mb-4 box-shadow dealer-card">
+                    <div class="card-body">
+                      <p class="card-text dealer-card-info"><%= card.rank %> of <%= card.suit %></p>
+                      <p class="card-text"><%= card.color %></p>
+                      <p class="card-text">points: <%= card.value %></p>
+                    </div>
+                  </div>
+                <% else %>
+                  <div class="card mb-4 box-shadow dealer-card">
+                    <div class="card-body">
+                      <p class="card-text">Face</p>
+                      <p class="card-text">Down</p>
+                      <p class="card-text">Card</p>
+                    </div>
+                  </div>
+                <% end %>
+            </div>
+          <% end%>
+        </div>
+      </div>
+    </div>
