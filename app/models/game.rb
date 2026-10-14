@@ -12,10 +12,19 @@ class Game < ApplicationRecord
 
     self.dealer_hand = Hand.new(role: "dealer")
     self.dealer_hand.cards << deck.sample
-    self.dealer_hand.cards << deck.sample
+
+    facedown_card = deck.sample
+    facedown_card.facedown = true
+    self.dealer_hand.cards << facedown_card
+
+    save!
   end
 
   def deck
     @deck ||= Card.generate_deck
+  end
+
+  def dealer_score
+    dealer_hand.cards.where(facedown: nil).sum(&:value)
   end
 end
