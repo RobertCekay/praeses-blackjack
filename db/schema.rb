@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_202222) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_154342) do
   create_table "cards", force: :cascade do |t|
     t.string "rank"
     t.string "color"
@@ -19,6 +19,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_202222) do
     t.integer "hand_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "facedown"
     t.index ["hand_id"], name: "index_cards_on_hand_id"
   end
 
@@ -33,6 +34,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_202222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "game_id", null: false
+    t.string "role"
     t.index ["game_id"], name: "index_hands_on_game_id"
   end
 

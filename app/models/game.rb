@@ -1,13 +1,18 @@
 class Game < ApplicationRecord
-  has_one :hand, autosave: true
-  has_many :cards, through: :hand
+  has_one :player_hand, -> { where(role: "player") }, class_name: "Hand"
+  has_one :dealer_hand, -> { where(role: "dealer") }, class_name: "Hand"
+  # has_many :cards, through: :hand
 
   after_initialize :setup_game
 
   def setup_game
-    self.hand = Hand.new
-    self.hand.cards << deck.sample
-    self.hand.cards << deck.sample
+    self.player_hand = Hand.new(role: "player")
+    self.player_hand.cards << deck.sample
+    self.player_hand.cards << deck.sample
+
+    self.dealer_hand = Hand.new(role: "dealer")
+    self.dealer_hand.cards << deck.sample
+    self.dealer_hand.cards << deck.sample
   end
 
   def deck
