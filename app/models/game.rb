@@ -6,8 +6,8 @@ class Game < ApplicationRecord
 
   def setup_game
     self.hand = Hand.new
-    self.hand.cards << deck.pop
-    self.hand.cards << deck.pop
+    self.hand.cards << deck.sample
+    self.hand.cards << deck.sample
   end
 
   def deck

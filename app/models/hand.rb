@@ -4,7 +4,5 @@ class Hand < ApplicationRecord
 
   def summed_score
     self.cards.sum(&:value)
-
-    # self.cards.first.value
   end
 end
