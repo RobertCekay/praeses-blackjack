@@ -13,7 +13,7 @@ class GamesController < ApplicationController
     end
   end
 
-    private
+  private
 
   def game_params
     params.permit(:hit, :stay)

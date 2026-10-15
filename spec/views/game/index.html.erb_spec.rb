@@ -51,6 +51,4 @@ RSpec.describe "games/index.html.erb", type: :view do
   # Dealers Turn
 
   # Who is the winner
-  #
-  # Repeat
 end

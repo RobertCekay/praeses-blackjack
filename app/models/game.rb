@@ -7,13 +7,14 @@ class Game < ApplicationRecord
 
   def setup_game
     self.player_hand = Hand.new(role: "player")
-    self.player_hand.cards << deck.sample
-    self.player_hand.cards << deck.sample
+
+    self.player_hand.cards << deck.pop
+    self.player_hand.cards << deck.pop
 
     self.dealer_hand = Hand.new(role: "dealer")
-    self.dealer_hand.cards << deck.sample
+    self.dealer_hand.cards << deck.pop
 
-    facedown_card = deck.sample
+    facedown_card = deck.pop
     facedown_card.facedown = true
     self.dealer_hand.cards << facedown_card
 
@@ -21,7 +22,7 @@ class Game < ApplicationRecord
   end
 
   def deck
-    @deck ||= Card.generate_deck
+    @deck ||= Card.generate_deck.shuffle
   end
 
   def dealer_score
@@ -29,16 +30,18 @@ class Game < ApplicationRecord
   end
 
   def player_hit
-    self.player_hand.cards << deck.sample
+    self.player_hand.cards << deck.pop
     check_player_bust
     check_for_player_win_or_tie
+    save
   end
 
   def player_stay
     flip_dealer_cards
-    check_for_winner
 
     # Dealer hits until they have at least 17
+    dealer_hits_until_17
+    check_for_winner
   end
 
   def flip_dealer_cards
@@ -53,17 +56,20 @@ class Game < ApplicationRecord
   end
 
   def check_for_player_win_or_tie
-    # Check if the player has 21
-    if player_hand.cards.sum(&:value) == 21
-      # If so, check if the dealer has 21
-      if dealer_hand.cards.sum(&:value) == 21
+    if player_hand.summed_score == 21
+      if dealer_hand.summed_score == 21
         # If so the game is tied
         self.winner = "tie"
       else
         # If not, the player wins
         self.winner = "player"
       end
-      save
+    end
+  end
+
+  def dealer_hits_until_17
+    while dealer_hand.summed_score < 17
+      self.dealer_hand.cards << deck.pop
     end
   end
 
@@ -71,17 +77,14 @@ class Game < ApplicationRecord
     player_sum = player_hand.cards.sum(&:value)
     dealer_sum = dealer_hand.cards.sum(&:value)
 
-    if player_sum > 21
-      self.winner = "dealer"
-    elsif dealer_sum > 21
+    if dealer_sum > 21
       self.winner = "player"
     elsif player_sum == dealer_sum
       self.winner = "tie"
     elsif player_sum > dealer_sum
       self.winner = "player"
-    else
-      self.winner = "dealer"
     end
+
     save
   end
 end
