@@ -36,7 +36,6 @@ class Card < ApplicationRecord
     SUIT_SYMBOLS[suit.to_sym]
   end
 
-  # Class method to generate a full deck in memory
   def self.generate_deck
     SUITS.flat_map do |suit_name|
       RANKS.map do |rank_name|

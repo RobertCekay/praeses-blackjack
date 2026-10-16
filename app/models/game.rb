@@ -8,17 +8,19 @@ class Game < ApplicationRecord
   def setup_game
     self.player_hand = Hand.new(role: "player")
 
-    self.player_hand.cards << deck.pop
-    self.player_hand.cards << deck.pop
+    self.player_hand.cards << deck.shift
+    self.player_hand.cards << deck.shift
 
     self.dealer_hand = Hand.new(role: "dealer")
-    self.dealer_hand.cards << deck.pop
+    self.dealer_hand.cards << deck.shift
 
-    facedown_card = deck.pop
+    facedown_card = deck.shift
     facedown_card.facedown = true
     self.dealer_hand.cards << facedown_card
 
     save!
+
+    check_for_player_win_or_tie
   end
 
   def deck
@@ -26,7 +28,7 @@ class Game < ApplicationRecord
   end
 
   def player_hit
-    self.player_hand.cards << deck.pop
+    self.player_hand.cards << deck.shift
     check_player_bust
     check_for_player_win_or_tie
 
@@ -36,7 +38,7 @@ class Game < ApplicationRecord
   def player_stay
     flip_dealer_cards
     dealer_hits_until_17
-    check_for_winner
+    check_for_end_of_game_winner
 
     save
   end
@@ -69,7 +71,7 @@ class Game < ApplicationRecord
     end
   end
 
-  def check_for_winner
+  def check_for_end_of_game_winner
     player_sum = player_hand.calculated_score
     dealer_sum = dealer_hand.calculated_score
 
@@ -79,7 +81,7 @@ class Game < ApplicationRecord
       self.winner = "tie"
     elsif player_sum > dealer_sum
       self.winner = "player"
-    else
+    elsif player_sum < dealer_sum
       self.winner = "dealer"
     end
   end

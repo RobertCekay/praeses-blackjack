@@ -28,6 +28,25 @@ RSpec.describe Game, type: :model do
       game = build(:game)
       expect(game.player_hand.cards.length).to be 2
     end
+
+    context "when the game starts and the player has blackjack" do
+      it "should check if player has blackjack" do
+        # SETUP
+        card_1 = create(:card, rank: 'Ace', value: 11, hand: create(:hand, game: create(:game)))
+        card_2 = create(:card, rank: 'king', value: 10, hand: create(:hand, game: create(:game)))
+
+        card_3 = create(:card, rank: '2', value: 2, hand: create(:hand, game: create(:game)))
+        card_4 = create(:card, rank: '2', value: 2, hand: create(:hand, game: create(:game)))
+
+        allow(Card).to receive_message_chain(:generate_deck, :shuffle).and_return([ card_1, card_2, card_3, card_4 ])
+
+        game = create(:game)
+
+        expect(game.player_hand.calculated_score).to be 21
+
+        expect(game.winner).to eq('player')
+      end
+    end
   end
 
   describe "deck" do
