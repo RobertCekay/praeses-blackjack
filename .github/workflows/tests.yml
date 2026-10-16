@@ -1,0 +1,28 @@
+name: Tests
+
+# Run the specs on every push and pull request, on each Ruby version the
+# README says is supported.
+on:
+  push:
+  pull_request:
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.3", "3.4"]
+
+    name: Ruby ${{ matrix.ruby }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true # runs bundle install and caches the gems
+
+      - run: bundle exec rspec
