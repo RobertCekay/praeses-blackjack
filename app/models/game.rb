@@ -33,15 +33,16 @@ class Game < ApplicationRecord
     self.player_hand.cards << deck.pop
     check_player_bust
     check_for_player_win_or_tie
+
     save
   end
 
   def player_stay
     flip_dealer_cards
-
-    # Dealer hits until they have at least 17
     dealer_hits_until_17
     check_for_winner
+
+    save
   end
 
   def flip_dealer_cards
@@ -51,7 +52,6 @@ class Game < ApplicationRecord
   def check_player_bust
     if player_hand.cards.sum(&:value) > 21
       self.winner = "dealer"
-      save
     end
   end
 
@@ -84,7 +84,5 @@ class Game < ApplicationRecord
     elsif player_sum > dealer_sum
       self.winner = "player"
     end
-
-    save
   end
 end
