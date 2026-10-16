@@ -4,6 +4,13 @@ class Card < ApplicationRecord
   RANKS = %w[2 3 4 5 6 7 8 9 10 Jack Queen King Ace].freeze
   SUITS = %w[hearts diamonds clubs spades].freeze
 
+  SUIT_SYMBOLS = {
+  spades: "♠",
+  hearts: "♥",
+  diamonds: "♦",
+  clubs: "♣"
+}.freeze
+
   VALUES = {
   "2"     => 2,
   "3"     => 3,
@@ -23,6 +30,10 @@ class Card < ApplicationRecord
   # Automatically determines color based on the suit
   def color
     %w[hearts diamonds].include?(suit) ? "red" : "black"
+  end
+
+  def suit_symbol
+    SUIT_SYMBOLS[suit.to_sym]
   end
 
   # Class method to generate a full deck in memory
