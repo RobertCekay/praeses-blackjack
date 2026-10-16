@@ -1,18 +1,42 @@
-<div class="album py-2 bg-secondary">
-      <div class="container">
-        <h2 class="mt-2">Your Cards</h2>
-        <div class="row">
-          <% @game.player_hand.cards.each do |card| %>
-            <div class="col-md-3">
-                <div class="card mb-4 box-shadow player-card">
-                  <div class="card-body">
-                    <p class="card-text player-card-info"><%= card.rank %> of <%= card.suit %></p>
-                    <p class="card-text"><%= card.color %></p>
-                    <p class="card-text">points: <%= card.value %></p>
-                  </div>
+<div class="album py-2 bg-light">
+    <div class="container">
+      <h2 class="mt-2">Your Cards</h2>
+
+      <div class="row justify-content-center">
+        <% @game.player_hand.cards.each do |card| %>
+          <div class="col-md-3">
+              <div class="card mb-4 box-shadow player-card">
+                <div class="card-body">
+                  <p class="card-text player-card-info"><%= card.rank %> of <%= card.suit %></p>
+                  <p class="card-text"><%= card.color %></p>
+                  <p class="card-text">points: <%= card.value %></p>
                 </div>
-            </div>
-          <% end%>
+              </div>
+          </div>
+        <% end%>
+      </div>
+
+      <div class='row '>
+        <div class="d-flex justify-content-center gap-2 ">
+        <div>
+        <%= button_to "Hit Me!", play_game_path(@game),
+            method: :get,
+            params: { hit: true },
+            data: { turbo: false },
+            class: "btn btn-primary my-2" %>
+        </div>
+
+
+          <%= button_to "I'll Stay", play_game_path(@game),
+            method: :get,
+            params: { stay: true },
+            class: "btn btn-secondary my-2" %>
+
+          <%= button_to "Start Over", "/",
+            method: :get,
+            class: "btn btn-outline-danger my-2" %>
         </div>
       </div>
+
     </div>
+  </div>

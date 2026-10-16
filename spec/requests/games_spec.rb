@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe 'Games', type: :request do
   describe "GET /games" do
     it "returns a successful response and renders the list" do
-      get games_path
+      get new_game_path
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Blackjack")

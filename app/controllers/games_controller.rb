@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  def index
+  def new
     @game = Game.new
   end
 

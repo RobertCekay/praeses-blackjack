@@ -83,6 +83,8 @@ class Game < ApplicationRecord
       self.winner = "tie"
     elsif player_sum > dealer_sum
       self.winner = "player"
+    else
+      self.winner = "dealer"
     end
   end
 end

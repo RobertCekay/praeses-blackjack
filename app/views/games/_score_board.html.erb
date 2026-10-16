@@ -1,32 +1,16 @@
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading mt-2">
-          Blackjack
+        <h1 class="jumbotron-heading mt-2 mb-2">
           <% if @game.winner == 'player' %>
-            <span class="text-success">- You Win!</span>
+            <span class="text-success">You Win ◝(ᵔᗜᵔ)◜</span>
           <% elsif @game.winner == 'dealer' %>
-            <span class="text-danger">- You Lose</span>
+            <span class="text-danger">You Lose (˃̣̣̥ᯅ˂̣̣̥)</span>
           <% elsif @game.winner == 'tie' %>
-            <span class="text-secondary">- You Tie</span>
+            <span class="text-secondary">You Tie (・―・)</span>
           <% end %>
         </h1>
         <p class="lead text-muted">Dealer Score: <%= @game.dealer_score %></p>
         <p class="lead text-body-tertiary">You Score: <%= @game.player_hand.summed_score %></p>
-        <div class="d-flex gap-2 justify-content-center align-items-center">
-          <%= button_to "Hit", play_game_path(@game),
-            method: :get,
-            params: { hit: true },
-            data: { turbo: false },
-            class: "btn btn-primary my-2" %>
 
-          <%= button_to "I'll Stay", play_game_path(@game),
-            method: :get,
-            params: { stay: true },
-            class: "btn btn-secondary my-2" %>
-
-          <%= button_to "Start Over", "/",
-            method: :get,
-            class: "btn btn-outline-danger my-2" %>
-        </div>
       </div>
     </section>
