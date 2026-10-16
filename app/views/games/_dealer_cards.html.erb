@@ -3,24 +3,19 @@
         <h2 class="mt-2">Dealer's Cards</h2>
         <div class="mt-2 row justify-content-center">
           <% @game.dealer_hand.cards.each do |card|  %>
-            <div class="col-md-2">
-                <% if !card.facedown %>
-                  <div class="card mb-4 box-shadow player-card <%= card_color_class(card) %>">
-                    <div class="card-body">
-                      <p class="card-text dealer-card-info"><%= card.rank %> of <%= card.suit_symbol %></p>
-                      <p class="card-text"><%= card.color %></p>
-                    </div>
+            <% if !card.facedown %>
+              <%= render "card", card: card %>
+            <% else %>
+              <div class="col-md-2">
+                <div class="card mb-4 box-shadow dealer-card">
+                  <div class="card-body">
+                    <p class="card-text">Face</p>
+                    <p class="card-text">Down</p>
+                    <p class="card-text">Card</p>
                   </div>
-                <% else %>
-                  <div class="card mb-4 box-shadow dealer-card">
-                    <div class="card-body">
-                      <p class="card-text">Face</p>
-                      <p class="card-text">Down</p>
-                      <p class="card-text">Card</p>
-                    </div>
-                  </div>
-                <% end %>
-            </div>
+                </div>
+              </div>
+            <% end %>
           <% end%>
         </div>
       </div>

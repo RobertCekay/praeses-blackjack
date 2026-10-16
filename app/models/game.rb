@@ -74,8 +74,8 @@ class Game < ApplicationRecord
   end
 
   def check_for_winner
-    player_sum = player_hand.cards.sum(&:value)
-    dealer_sum = dealer_hand.cards.sum(&:value)
+    player_sum = player_hand.summed_score
+    dealer_sum = dealer_hand.summed_score
 
     if dealer_sum > 21
       self.winner = "player"

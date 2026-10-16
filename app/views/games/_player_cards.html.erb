@@ -4,16 +4,8 @@
 
       <div class="row justify-content-center">
         <% @game.player_hand.cards.each do |card| %>
-          <div class="col-md-2">
-              <div class="card mb-4 box-shadow player-card <%= card_color_class(card) %>">
-
-                <div class="card-body">
-                  <p class="card-text player-card-info"><%= card.rank %> of <%= card.suit_symbol %></p>
-                  <p class="card-text"><%= card.color %></p>
-                </div>
-              </div>
-          </div>
-        <% end%>
+          <%= render "card", card: card %>
+        <% end %>
       </div>
 
       <div class='row '>
