@@ -1,4 +1,4 @@
-# Blackjack [![Tests](https://github.com/RobertCekay/praeses-blackjack/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/RobertCekay/praeses-blackjack/actions/workflows/tests.yml))
+# Blackjack [![Tests](https://github.com/RobertCekay/praeses-blackjack/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/RobertCekay/praeses-blackjack/actions/workflows/tests.yml)
 
 This is a simple Blackjack web game. Made with Rails 8 and Ruby 3.4
 
