@@ -192,10 +192,11 @@ RSpec.describe Game, type: :model do
       card_4 = create(:card, rank: 'Ace', value: 11, hand: game.dealer_hand)
       card_5 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
       card_6 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
+      card_7 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
 
       game.dealer_hand.cards.destroy_all
 
-      game.dealer_hand.cards = [ card_4, card_5, card_6 ]
+      game.dealer_hand.cards = [ card_4, card_5, card_6, card_7 ]
 
       # ACTION
       game.player_stay
