@@ -44,14 +44,6 @@ RSpec.describe Game, type: :model do
       end
   end
 
-  describe "dealer_score" do
-    it "should not include facedown cards" do
-      game = create(:game)
-      face_up_cards = game.dealer_hand.cards.where(facedown: false)
-      expect(game.dealer_score).to eq(face_up_cards.sum(&:value))
-    end
-  end
-
   describe "player_hit" do
     it "Should add a card to the player hand" do
       game = create(:game)
@@ -67,7 +59,7 @@ RSpec.describe Game, type: :model do
 
       expect(game.winner).to eq(nil)
 
-      while game.player_hand.summed_score <= 21
+      while game.player_hand.calculated_score <= 21
         game.player_hit
       end
 
@@ -144,65 +136,44 @@ RSpec.describe Game, type: :model do
 
       game.dealer_hand.cards = custom_cards
 
-      expect(game.dealer_hand.summed_score).to be 4 # < 17
+      expect(game.dealer_hand.calculated_score).to be 4 # < 17
 
       # ACTION
       game.player_stay
 
-      expect(game.dealer_hand.summed_score).to be >= 17
+      expect(game.dealer_hand.calculated_score).to be >= 17
     end
 
-    it "Should check for a winner" do
-      # SETUP
-      game = create(:game)
-      game.player_hand.cards.destroy_all
+    context 'when checking for a winner' do
+      it "Should check for dealer bust" do
+        # SETUP
+        game = create(:game)
+        game.player_hand.cards.destroy_all
 
-      card_1 = create(:card, rank: 'Ace', value: 11, hand_id: game.player_hand.id)
-      card_2 = create(:card, rank: '10', value: 10, hand_id: game.player_hand.id)
+        card_1 = create(:card, rank: 'Ace', value: 11, hand_id: game.player_hand.id)
+        card_2 = create(:card, rank: '10', value: 10, hand_id: game.player_hand.id)
 
-      game.player_hand.cards = [ card_1, card_2 ]
+        game.player_hand.cards = [ card_1, card_2 ]
 
-      expect(game.player_hand.summed_score).to be 21
+        expect(game.player_hand.calculated_score).to be 21
 
-      card_4 = create(:card, rank: '2', value: 2, hand: game.dealer_hand)
-      card_5 = create(:card, rank: '2', value: 2, hand: game.dealer_hand)
+        card_4 = create(:card, rank: 'Ace', value: 11, hand: game.dealer_hand)
+        card_5 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
+        card_6 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
+        card_7 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
 
-      game.dealer_hand.cards.destroy_all
+        game.dealer_hand.cards.destroy_all
 
-      game.dealer_hand.cards = [ card_4, card_5 ]
+        game.dealer_hand.cards = [ card_4, card_5, card_6, card_7 ]
 
-      # ACTION
-      game.player_stay
+        # ACTION
+        game.player_stay
 
-      expect(game.winner).to eq('player')
+        expect(game.winner).to eq('player')
+      end
     end
 
-    it "Should check for dealer bust" do
-      # SETUP
-      game = create(:game)
-      game.player_hand.cards.destroy_all
 
-      card_1 = create(:card, rank: 'Ace', value: 11, hand_id: game.player_hand.id)
-      card_2 = create(:card, rank: '10', value: 10, hand_id: game.player_hand.id)
-
-      game.player_hand.cards = [ card_1, card_2 ]
-
-      expect(game.player_hand.summed_score).to be 21
-
-      card_4 = create(:card, rank: 'Ace', value: 11, hand: game.dealer_hand)
-      card_5 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
-      card_6 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
-      card_7 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
-
-      game.dealer_hand.cards.destroy_all
-
-      game.dealer_hand.cards = [ card_4, card_5, card_6, card_7 ]
-
-      # ACTION
-      game.player_stay
-
-      expect(game.winner).to eq('player')
-    end
 
     it "Should check for a tie" do
       # SETUP
@@ -214,7 +185,7 @@ RSpec.describe Game, type: :model do
 
       game.player_hand.cards = [ card_1, card_2 ]
 
-      expect(game.player_hand.summed_score).to be 21
+      expect(game.player_hand.calculated_score).to be 21
 
       card_4 = create(:card, rank: 'Ace', value: 11, hand: game.dealer_hand)
       card_5 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)

@@ -25,10 +25,6 @@ class Game < ApplicationRecord
     @deck ||= Card.generate_deck.shuffle
   end
 
-  def dealer_score
-    dealer_hand.cards.where(facedown: false).sum(&:value)
-  end
-
   def player_hit
     self.player_hand.cards << deck.pop
     check_player_bust
@@ -56,8 +52,8 @@ class Game < ApplicationRecord
   end
 
   def check_for_player_win_or_tie
-    if player_hand.summed_score == 21
-      if dealer_hand.summed_score == 21
+    if player_hand.calculated_score == 21
+      if dealer_hand.calculated_score == 21
         # If so the game is tied
         self.winner = "tie"
       else
@@ -68,14 +64,14 @@ class Game < ApplicationRecord
   end
 
   def dealer_hits_until_17
-    while dealer_hand.summed_score < 17
+    while dealer_hand.calculated_score < 17
       self.dealer_hand.cards << deck.pop
     end
   end
 
   def check_for_winner
-    player_sum = player_hand.summed_score
-    dealer_sum = dealer_hand.summed_score
+    player_sum = player_hand.calculated_score
+    dealer_sum = dealer_hand.calculated_score
 
     if dealer_sum > 21
       self.winner = "player"

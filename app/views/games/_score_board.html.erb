@@ -9,8 +9,10 @@
             <span class="text-secondary">You Tie (・―・)</span>
           <% end %>
         </h1>
-        <p class="lead text-white">Dealer Score: <%= @game.dealer_score %></p>
-        <p class="lead text-white">You Score: <%= @game.player_hand.summed_score %></p>
+        <p class="lead text-white">
+          Dealer Score: <%= @game.dealer_hand.calculated_score(face_up_only: true) %>
+        </p>
+        <p class="lead text-white">You Score: <%= @game.player_hand.calculated_score %></p>
 
       </div>
     </section>
