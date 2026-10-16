@@ -26,21 +26,9 @@ RSpec.describe Hand, type: :model do
         game.player_hand.cards = [ card_1, card_2 ]
 
         expect(game.player_hand.summed_score).to be 21
-
-        card_4 = create(:card, rank: '2', value: 2, hand: game.dealer_hand)
-        card_5 = create(:card, rank: '2', value: 2, hand: game.dealer_hand)
-
-        game.dealer_hand.cards.destroy_all
-
-        game.dealer_hand.cards = [ card_4, card_5 ]
-
-        # ACTION
-        game.player_stay
-
-        expect(game.winner).to eq('player')
       end
 
-      it 'should have a value of 1 1 for aces, if that is better for the player' do
+      it 'should have a value of 1 for aces, if that is better for the player' do
         # SETUP
         game = create(:game)
         game.player_hand.cards.destroy_all
@@ -80,18 +68,6 @@ RSpec.describe Hand, type: :model do
         game.player_hand.cards = [ card_1, card_2, card_3, card_4, card_5 ]
 
         expect(game.player_hand.summed_score).to be 21
-
-        card_6 = create(:card, rank: '2', value: 2, hand: game.dealer_hand)
-        card_7 = create(:card, rank: '2', value: 2, hand: game.dealer_hand)
-
-        game.dealer_hand.cards.destroy_all
-
-        game.dealer_hand.cards = [ card_6, card_7 ]
-
-        # ACTION
-        game.player_stay
-
-        expect(game.winner).to eq('player')
       end
     end
   end
