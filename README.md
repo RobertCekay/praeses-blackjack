@@ -1,25 +1,56 @@
-# README
+# Blackjack ![Build Status](https://github.com)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple Blackjack web game. Made with Rails 8 and Ruby 3.4
 
-Things you may want to cover:
+## Prerequisites
 
-* Ruby version
+Ensure you have the following system dependencies installed:
 
-* System dependencies
+* **Ruby:** `3.4.3` (managed via `rbenv` or `rvm`)
+* **Rails:** `8.0.0`
 
-* Configuration
+##  Getting Started
 
-* Database creation
+Follow these steps to set up the application locally.
 
-* Database initialization
+### 1. Clone the Repository
+```bash
+git clone https://github.com/RobertCekay/praeses-blackjack.git
+cd praeses-blackjack
+```
 
-* How to run the test suite
+### 2. Install Dependencies
+Install both Ruby gems and JavaScript packages:
+```bash
+bundle install
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### 4. Database Setup
+Create, migrate, and seed the local database:
+```bash
+bin/rails db:prepare
+```
 
-* Deployment instructions
+### 5. Start the Application
+Run the application locally using `bin/dev`.
+```bash
+bin/dev
+```
+Open your browser and navigate to [http://localhost:3000](http://localhost:3000).
 
-* ...
-# praeses-blackjack
+## Running Tests
+
+We use **RSpec** for testing. Run the entire test suite using:
+
+```bash
+# Run all tests
+bundle exec rspec
+
+# Run a specific test file
+bundle exec rspec spec/models/game_spec.rb
+```
+
+To check code quality and formatting compliance, run **RuboCop**:
+```bash
+bundle exec rubocop
+```
