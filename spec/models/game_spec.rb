@@ -78,6 +78,8 @@ RSpec.describe Game, type: :model do
 
       expect(game.winner).to eq(nil)
 
+      game.dealer_hand.cards.destroy_all
+
       while game.player_hand.calculated_score <= 21
         game.player_hit
       end
@@ -161,6 +163,31 @@ RSpec.describe Game, type: :model do
       game.player_stay
 
       expect(game.dealer_hand.calculated_score).to be >= 17
+    end
+
+    it "Should check for a tie" do
+      # SETUP
+      game = create(:game)
+      game.player_hand.cards.destroy_all
+
+      card_1 = create(:card, rank: 'Ace', value: 11, hand_id: game.player_hand.id)
+      card_2 = create(:card, rank: '10', value: 10, hand_id: game.player_hand.id)
+
+      game.player_hand.cards = [ card_1, card_2 ]
+
+      expect(game.player_hand.calculated_score).to be 21
+
+      card_4 = create(:card, rank: 'Ace', value: 11, hand: game.dealer_hand)
+      card_5 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
+
+      game.dealer_hand.cards.destroy_all
+
+      game.dealer_hand.cards = [ card_4, card_5 ]
+
+      # ACTION
+      game.player_stay
+
+      expect(game.winner).to eq('tie')
     end
 
     context 'when checking for a winner' do
@@ -252,31 +279,6 @@ RSpec.describe Game, type: :model do
 
         expect(game.winner).to eq('dealer')
       end
-    end
-
-    it "Should check for a tie" do
-      # SETUP
-      game = create(:game)
-      game.player_hand.cards.destroy_all
-
-      card_1 = create(:card, rank: 'Ace', value: 11, hand_id: game.player_hand.id)
-      card_2 = create(:card, rank: '10', value: 10, hand_id: game.player_hand.id)
-
-      game.player_hand.cards = [ card_1, card_2 ]
-
-      expect(game.player_hand.calculated_score).to be 21
-
-      card_4 = create(:card, rank: 'Ace', value: 11, hand: game.dealer_hand)
-      card_5 = create(:card, rank: '10', value: 10, hand: game.dealer_hand)
-
-      game.dealer_hand.cards.destroy_all
-
-      game.dealer_hand.cards = [ card_4, card_5 ]
-
-      # ACTION
-      game.player_stay
-
-      expect(game.winner).to eq('tie')
     end
   end
 end

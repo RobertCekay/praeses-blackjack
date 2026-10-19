@@ -10,7 +10,11 @@ class Hand < ApplicationRecord
     score = playable_cards.sum(&:value)
     number_of_aces = playable_cards.where(rank: "Ace").count
     adjusted_score = score
-    while adjusted_score > 21
+
+    for i in 1..number_of_aces
+      if adjusted_score <= 21
+        break
+      end
       adjusted_score = adjusted_score - 10
     end
 

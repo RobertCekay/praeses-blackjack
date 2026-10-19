@@ -71,31 +71,12 @@ RSpec.describe Hand, type: :model do
 
         expect(game.player_hand.calculated_score).to be 21
       end
-    end
 
-    it "Should decrease the value of am Ace from 11 to 1 if it busts player" do
-      game = create(:game)
-
-      card_1 = create(:card, rank: 'Ace', value: 11, hand: game.player_hand)
-      card_2 = create(:card, rank: 9, value: 9, hand: game.player_hand)
-      card_3 = create(:card, rank: 4, value: 4, hand: game.player_hand)
-
-      game.player_hand.cards.destroy_all
-
-      game.player_hand.cards << card_1
-      game.player_hand.cards << card_2
-      game.player_hand.cards << card_3
-
-      expect(game.player_hand.calculated_score).to eq(14)
-    end
-
-    # What happens when there are multiple Aces
-    context 'when multiple aces are in a player or dealer hand' do
-      it "Should only decrease the value of aces until hand total is 21" do
+      it "Should decrease the value of am Ace from 11 to 1 if it busts player" do
         game = create(:game)
 
         card_1 = create(:card, rank: 'Ace', value: 11, hand: game.player_hand)
-        card_2 = create(:card, rank: 'Ace', value: 11, hand: game.player_hand)
+        card_2 = create(:card, rank: 9, value: 9, hand: game.player_hand)
         card_3 = create(:card, rank: 4, value: 4, hand: game.player_hand)
 
         game.player_hand.cards.destroy_all
@@ -104,7 +85,25 @@ RSpec.describe Hand, type: :model do
         game.player_hand.cards << card_2
         game.player_hand.cards << card_3
 
-        expect(game.player_hand.calculated_score).to eq(16)
+        expect(game.player_hand.calculated_score).to eq(14)
+      end
+
+      context 'when multiple aces are in a player or dealer hand' do
+        it "Should only decrease the value of aces until hand total is 21" do
+          game = create(:game)
+
+          card_1 = create(:card, rank: 'Ace', value: 11, hand: game.player_hand)
+          card_2 = create(:card, rank: 'Ace', value: 11, hand: game.player_hand)
+          card_3 = create(:card, rank: 4, value: 4, hand: game.player_hand)
+
+          game.player_hand.cards.destroy_all
+
+          game.player_hand.cards << card_1
+          game.player_hand.cards << card_2
+          game.player_hand.cards << card_3
+
+          expect(game.player_hand.calculated_score).to eq(16)
+        end
       end
     end
   end
