@@ -48,7 +48,7 @@ class Game < ApplicationRecord
   end
 
   def check_player_bust
-    if player_hand.cards.sum(&:value) > 21
+    if player_hand.calculated_score > 21
       self.winner = "dealer"
     end
   end
