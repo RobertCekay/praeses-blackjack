@@ -55,7 +55,7 @@ group :development, :test do
 
   gem "simplecov"
 
-  gem "rspec-rails", "~> 8.0.0"
+  gem "rspec-rails", "~> 8.1.0"
 
   gem "pry-byebug"
 end
